@@ -2,6 +2,7 @@ name: agradiance_flutter_kits
 description: "AGRadiance Flutter Kits"
 version: 0.0.1
 homepage:
+repository: https://github.com/agradiance/agradiance_flutter_kits
 
 environment:
   sdk: ^3.10.4
@@ -11,7 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   equatable: ^2.0.7
-  jiffy: ^6.4.3
+  jiffy: ^6.4.4
   flutter_form_builder: ^10.2.0
   lite_validator: ^0.0.4
   responsive_framework: ^1.5.1
@@ -21,10 +22,10 @@ dependencies:
   http_status: ^3.3.3
   flutter_local_notifications: ^19.5.0
   collection: ^1.19.1
-  image_picker: ^1.2.0
-  file_picker: ^10.3.3
+  image_picker: ^1.2.1
+  file_picker: ^10.3.7
   file_saver: ^0.3.1
-  device_info_plus: ^12.2.0
+  device_info_plus: ^12.3.0
   country_picker: ^2.0.27
   # google_mobile_ads: ^6.0.0
   app_links: ^7.0.0
@@ -32,14 +33,14 @@ dependencies:
   flutter_secure_storage: ^10.0.0
   new_version_plus: ^0.1.1
   url_launcher: ^6.3.2
-  flutter_svg: ^2.2.2
+  flutter_svg: ^2.2.3
   readmore: ^3.0.0
   dart_jsonwebtoken: ^3.1.1
   # dart_jsonwebtoken: ^3.3.1
-  dlibphonenumber: ^1.1.51
+  dlibphonenumber: ^1.1.53
   encrypt: ^5.0.3
   loading_animation_widget: ^1.3.0
-  skeletonizer: ^2.1.0+1
+  skeletonizer: ^2.1.1
   cached_network_image: ^3.4.1
   extended_image: ^10.0.1
   visibility_detector: ^0.4.0+2
@@ -53,7 +54,7 @@ dev_dependencies:
   flutter_test:
     sdk: flutter
   flutter_lints: ^6.0.0
-  build_runner: ^2.10.1
+  build_runner: ^2.10.4
   flutter_gen_runner: ^5.12.0
 
 # For information on the generic Dart part of this file, see the
