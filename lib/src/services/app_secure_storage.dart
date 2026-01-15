@@ -19,7 +19,7 @@ class AppSecureStorage {
 
   final FlutterSecureStorage _storage;
 
-  static AndroidOptions _aOptions() => AndroidOptions(encryptedSharedPreferences: true);
+  static AndroidOptions _aOptions() => AndroidOptions();
   static IOSOptions _iOptions() => IOSOptions.defaultOptions;
   static LinuxOptions _lOptions() => LinuxOptions.defaultOptions;
   static MacOsOptions _mOptions() => MacOsOptions.defaultOptions;
@@ -41,10 +41,14 @@ class AppSecureStorage {
     // }
   }
 
-  Future<String?> readUserValue({required String userID, required String key}) =>
-      _read(key: "${userID.toLowerCase()}:$key");
+  Future<String?> readUserValue({
+    required String userID,
+    required String key,
+  }) => _read(key: "${userID.toLowerCase()}:$key");
 
-  Future<Map<String, String>?> readRefKeyValues({required String refKeyValue}) async {
+  Future<Map<String, String>?> readRefKeyValues({
+    required String refKeyValue,
+  }) async {
     Map<String, String> result = {};
 
     for (final data in (await _allData()).entries) {
@@ -56,7 +60,9 @@ class AppSecureStorage {
     return result.isNotEmpty ? result : null;
   }
 
-  Future<({String? key, String? value})> readFirstRefKeyValue({required String refKeyValue}) async {
+  Future<({String? key, String? value})> readFirstRefKeyValue({
+    required String refKeyValue,
+  }) async {
     String? key;
     String? value;
 
@@ -85,14 +91,21 @@ class AppSecureStorage {
   }
 
   // Is key saved
-  Future<bool> isUserDataSaved({required String userID, required String key, required String? value}) async {
+  Future<bool> isUserDataSaved({
+    required String userID,
+    required String key,
+    required String? value,
+  }) async {
     return (await _allData())["${userID.toLowerCase()}:$key"] == value;
   }
 
   /* Write value
   ....................................
   */
-  Future<bool> _writeValue({required String keyRef, required String? value}) async {
+  Future<bool> _writeValue({
+    required String keyRef,
+    required String? value,
+  }) async {
     // final status = await AppPermissionService.instance
     //     .requestMultipleAndSettiings([Permission.storage]);
     // if (status[Permission.storage]?.isGranted ?? false) {
@@ -115,20 +128,30 @@ class AppSecureStorage {
   }
 
   // Write value
-  Future<bool> writeUserValue({required String userID, required String ref, required String? value}) async {
+  Future<bool> writeUserValue({
+    required String userID,
+    required String ref,
+    required String? value,
+  }) async {
     return _writeValue(keyRef: '${userID.toLowerCase()}:$ref', value: value);
   }
 
-  Future<bool> writeWithCombinedKey({required String combinedKey, required String? value}) {
+  Future<bool> writeWithCombinedKey({
+    required String combinedKey,
+    required String? value,
+  }) {
     return _writeValue(keyRef: combinedKey, value: value);
   }
 
   // Delete value
-  Future<void> deleteWithUserIDKey({required String userID, required String key}) =>
-      _storage.delete(key: '$userID:$key');
+  Future<void> deleteWithUserIDKey({
+    required String userID,
+    required String key,
+  }) => _storage.delete(key: '$userID:$key');
 
   // Delete value
-  Future<void> deleteDataWithCombinedKey({required String combinedKey}) => _storage.delete(key: combinedKey);
+  Future<void> deleteDataWithCombinedKey({required String combinedKey}) =>
+      _storage.delete(key: combinedKey);
 
   Future<void> deleteAllUserData({required String userID}) async {
     // Delete a specific user data that contains a particular string
@@ -141,13 +164,18 @@ class AppSecureStorage {
     }
   }
 
-  Future<void> deleteValueWithAllTagInRequiredList({String? userID, required List<String> requiredList}) async {
+  Future<void> deleteValueWithAllTagInRequiredList({
+    String? userID,
+    required List<String> requiredList,
+  }) async {
     // Delete a specific user data that contains a particular string
     final data = await _allData();
     for (final map in data.entries) {
       final status = requiredList.every((element) {
         return [
-          if (userID != null) ...[map.key.toLowerCase().trim().startsWith(userID.toLowerCase())],
+          if (userID != null) ...[
+            map.key.toLowerCase().trim().startsWith(userID.toLowerCase()),
+          ],
           map.key.toLowerCase().contains(element.toLowerCase()),
         ].every((element) => element);
       });
@@ -157,13 +185,18 @@ class AppSecureStorage {
     }
   }
 
-  Future<void> deleteValueWithAnyTagInRequiredList({String? userID, required List<String> requiredList}) async {
+  Future<void> deleteValueWithAnyTagInRequiredList({
+    String? userID,
+    required List<String> requiredList,
+  }) async {
     // Delete a specific user data that contains a particular string
     final data = await _allData();
     for (final map in data.entries) {
       final status = requiredList.any((element) {
         return [
-          if (userID != null) ...[map.key.toLowerCase().trim().startsWith(userID.toLowerCase())],
+          if (userID != null) ...[
+            map.key.toLowerCase().trim().startsWith(userID.toLowerCase()),
+          ],
           map.key.toLowerCase().contains(element.toLowerCase()),
         ].every((element) => element);
       });

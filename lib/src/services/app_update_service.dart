@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:agradiance_flutter_kits/src/widgets/custom_app_update_modal_sheet.dart';
 import 'package:flutter/material.dart';
+import 'package:new_version_plus/model/version_status.dart';
 
 import 'package:new_version_plus/new_version_plus.dart';
 
@@ -29,7 +30,8 @@ class AppUpdateService {
     NewVersionPlus? newVersionPlus,
     LaunchMode launchMode = LaunchMode.platformDefault,
   }) async {
-    await (newVersionPlus ?? await AppUpdateService.instance.checkSS()).launchAppStore(appStoreLink);
+    await (newVersionPlus ?? await AppUpdateService.instance.checkSS())
+        .launchAppStore(appStoreLink);
   }
 
   Future<VersionStatus?> getVersionStatus([NewVersionPlus? newVersion]) async {
@@ -59,7 +61,10 @@ class AppUpdateService {
           context: context,
           builder: (context) {
             //
-            return PopScope(canPop: false, child: CustomAppUpdateModalSheet(versionStatus: versionStatus));
+            return PopScope(
+              canPop: false,
+              child: CustomAppUpdateModalSheet(versionStatus: versionStatus),
+            );
           },
         );
       } else {
@@ -70,7 +75,11 @@ class AppUpdateService {
             //
             return PopScope(
               canPop: false,
-              child: AlertDialog(content: CustomAppUpdateModalSheet(versionStatus: versionStatus)),
+              child: AlertDialog(
+                content: CustomAppUpdateModalSheet(
+                  versionStatus: versionStatus,
+                ),
+              ),
             );
           },
         );

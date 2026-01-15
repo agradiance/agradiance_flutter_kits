@@ -6,7 +6,7 @@ import 'package:agradiance_flutter_kits/src/widgets/custom_button.dart';
 import 'package:agradiance_flutter_kits/src/widgets/failed_state_button.dart';
 import 'package:agradiance_flutter_kits/src/widgets/loading_state_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:new_version_plus/new_version_plus.dart';
+import 'package:new_version_plus/model/version_status.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:readmore/readmore.dart';
 
@@ -16,7 +16,8 @@ class CustomAppUpdateModalSheet extends StatefulWidget {
   final VersionStatus? versionStatus;
 
   @override
-  State<CustomAppUpdateModalSheet> createState() => _CustomAppUpdateModalSheetState();
+  State<CustomAppUpdateModalSheet> createState() =>
+      _CustomAppUpdateModalSheetState();
 }
 
 class _CustomAppUpdateModalSheetState extends State<CustomAppUpdateModalSheet> {
@@ -33,7 +34,9 @@ class _CustomAppUpdateModalSheetState extends State<CustomAppUpdateModalSheet> {
     try {
       final newVersion = await AppUpdateService.instance.checkSS();
 
-      versionStatus = await AppUpdateService.instance.getVersionStatus(newVersion);
+      versionStatus = await AppUpdateService.instance.getVersionStatus(
+        newVersion,
+      );
     } catch (e) {
       //
     } finally {}
@@ -156,23 +159,31 @@ class _CustomAppUpdateModalSheetState extends State<CustomAppUpdateModalSheet> {
                               child: ExpansionTile(
                                 initiallyExpanded: true,
                                 title: Text("What's new").bold,
-                                expandedCrossAxisAlignment: CrossAxisAlignment.start,
+                                expandedCrossAxisAlignment:
+                                    CrossAxisAlignment.start,
                                 expandedAlignment: Alignment.topCenter,
                                 minTileHeight: 0,
                                 tilePadding: EdgeInsets.zero,
-                                subtitle: Text(versionStatus?.storeVersion ?? ""),
+                                subtitle: Text(
+                                  versionStatus?.storeVersion ?? "",
+                                ),
                                 children: [
                                   Align(
                                     alignment: Alignment.centerLeft,
                                     child: ReadMoreText(
-                                      (versionStatus?.releaseNotes ?? "").replaceAll("<br>", "\n"),
+                                      (versionStatus?.releaseNotes ?? "")
+                                          .replaceAll("<br>", "\n"),
                                       trimMode: TrimMode.Line,
                                       trimLines: 3,
-                                      colorClickableText: context.colorScheme.primary,
+                                      colorClickableText:
+                                          context.colorScheme.primary,
                                       trimCollapsedText: ' Read more',
                                       trimExpandedText: ' Show less',
                                       style: TextStyle(fontSize: 11),
-                                      moreStyle: TextStyle(fontSize: 14, fontWeight: FontWeight.bold),
+                                      moreStyle: TextStyle(
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.bold,
+                                      ),
                                     ),
                                   ),
                                 ],
@@ -203,7 +214,10 @@ class _CustomAppUpdateModalSheetState extends State<CustomAppUpdateModalSheet> {
                                   text: "Update now",
                                   onPressed: () async {
                                     if (versionStatus?.appStoreLink != null) {
-                                      AppUpdateService.instance.launch(appStoreLink: versionStatus!.appStoreLink);
+                                      AppUpdateService.instance.launch(
+                                        appStoreLink:
+                                            versionStatus!.appStoreLink,
+                                      );
                                     }
                                   },
                                 ),
