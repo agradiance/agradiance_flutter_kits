@@ -18,12 +18,18 @@ class _ApiResponse<T> {
 
   T get data => responseData;
 
-  _ApiResponse({required this.responseData, required this.statusCode, required this.response});
+  _ApiResponse({
+    required this.responseData,
+    required this.statusCode,
+    required this.response,
+  });
 }
 
 class RestApiService {
   RestApiService._(this._client);
-  static final RestApiService _internal = RestApiService._(Dio(BaseOptions(receiveDataWhenStatusError: true)));
+  static final RestApiService _internal = RestApiService._(
+    Dio(BaseOptions(receiveDataWhenStatusError: true)),
+  );
   factory RestApiService() => _internal;
   static RestApiService get instance => RestApiService();
 
@@ -67,7 +73,10 @@ class RestApiService {
     void Function(Exception exception)? onConfigError,
   }) async {
     try {
-      assert((ping == false || (ping == true && pingUrl != null)), "pingUrl must not be null when ping is true");
+      assert(
+        (ping == false || (ping == true && pingUrl != null)),
+        "pingUrl must not be null when ping is true",
+      );
 
       _baseUrl = baseUrl;
       _connectTimeout = connectTimeout;
@@ -75,14 +84,17 @@ class RestApiService {
       _responseMessageKey = responseMessageKey;
 
       // set client
-      _client.options = _client.options.copyWith(baseUrl: baseUrl, connectTimeout: connectTimeout);
+      _client.options = _client.options.copyWith(
+        baseUrl: baseUrl,
+        connectTimeout: connectTimeout,
+      );
 
       if (interceptors != null) {
         addAllInterceptors(interceptor: interceptors);
       }
 
       if (ping && pingUrl != null) {
-        await pingApi(pingUrl);
+        pingApi(pingUrl);
       }
     } on Exception catch (exception) {
       //
@@ -92,12 +104,12 @@ class RestApiService {
     //
   }
 
-  Future<void> pingApi([String? url]) async {
+  void pingApi([String? url]) {
     try {
       if (url != null) {
-        await Dio().get(url);
+        Dio().get(url);
       } else if (_baseUrl != null) {
-        await Dio().get(_baseUrl!);
+        Dio().get(_baseUrl!);
       }
     } on Exception {
       rethrow;
@@ -116,7 +128,8 @@ class RestApiService {
     final dioExceptionData = dioException.response?.data;
     final statusMessage = dioException.response?.statusMessage;
     final message = dioExceptionData != null && dioExceptionData is Map
-        ? dioExceptionData[_responseMessageKey]?.toString() ?? dioExceptionData["detail"]?.toString()
+        ? dioExceptionData[_responseMessageKey]?.toString() ??
+              dioExceptionData["detail"]?.toString()
         : dioExceptionData is String
         ? dioExceptionData.toString()
         : statusMessage;
@@ -124,24 +137,47 @@ class RestApiService {
     final statusCode = dioException.response?.statusCode;
     switch (dioException.type) {
       case DioExceptionType.connectionTimeout:
-        throw APIException(message: message ?? "Request timed out", statusCode: statusCode);
+        throw APIException(
+          message: message ?? "Request timed out",
+          statusCode: statusCode,
+        );
       case DioExceptionType.sendTimeout:
         throw APIException(
-          message: message ?? "The request could not be sent within the allowed time",
+          message:
+              message ??
+              "The request could not be sent within the allowed time",
           statusCode: statusCode,
         );
       case DioExceptionType.receiveTimeout:
-        throw APIException(message: message ?? "The server took too long to send a response", statusCode: statusCode);
+        throw APIException(
+          message: message ?? "The server took too long to send a response",
+          statusCode: statusCode,
+        );
       case DioExceptionType.badCertificate:
-        throw APIException(message: message ?? "Certificate verification failed", statusCode: statusCode);
+        throw APIException(
+          message: message ?? "Certificate verification failed",
+          statusCode: statusCode,
+        );
       case DioExceptionType.badResponse:
-        throw APIException(message: message ?? "Bad response, wrong request format", statusCode: statusCode);
+        throw APIException(
+          message: message ?? "Bad response, wrong request format",
+          statusCode: statusCode,
+        );
       case DioExceptionType.cancel:
-        throw APIException(message: message ?? "Request canceled", statusCode: statusCode);
+        throw APIException(
+          message: message ?? "Request canceled",
+          statusCode: statusCode,
+        );
       case DioExceptionType.connectionError:
-        throw APIException(message: message ?? "No internet connection or network failure", statusCode: statusCode);
+        throw APIException(
+          message: message ?? "No internet connection or network failure",
+          statusCode: statusCode,
+        );
       case DioExceptionType.unknown:
-        throw APIException(message: message ?? "An unexpected error occurred", statusCode: statusCode);
+        throw APIException(
+          message: message ?? "An unexpected error occurred",
+          statusCode: statusCode,
+        );
     }
   }
 
@@ -149,15 +185,21 @@ class RestApiService {
     if (exception is DioException) {
       throw _throwDioException(exception);
     } else if (exception is TimeoutException) {
-      throw APIException(message: exception.message ?? 'Connection Timeout please retry', statusCode: 100);
+      throw APIException(
+        message: exception.message ?? 'Connection Timeout please retry',
+        statusCode: 100,
+      );
     } else {
       //dprint(exception.toString(), stackTrace: StackTrace.current);
       throw APIException(message: exception.toString(), statusCode: -1);
     }
   }
 
-  void setVerifyUserAuthTokensExpiration(Future<void> Function()? veryfyUserAuthTokensExpirationCallBack) {
-    this.veryfyUserAuthTokensExpirationCallBack = veryfyUserAuthTokensExpirationCallBack;
+  void setVerifyUserAuthTokensExpiration(
+    Future<void> Function()? veryfyUserAuthTokensExpirationCallBack,
+  ) {
+    this.veryfyUserAuthTokensExpirationCallBack =
+        veryfyUserAuthTokensExpirationCallBack;
   }
 
   Future<void> Function()? veryfyUserAuthTokensExpirationCallBack;
@@ -186,7 +228,11 @@ class RestApiService {
           : response.data;
 
       if (response.statusCode?.isSuccessfulHttpStatusCode ?? false) {
-        return _ApiResponse(responseData: body, statusCode: response.statusCode, response: response);
+        return _ApiResponse(
+          responseData: body,
+          statusCode: response.statusCode,
+          response: response,
+        );
       } else {
         //dprint(response.statusMessage, stackTrace: StackTrace.current);
         throw APIException(
@@ -212,7 +258,11 @@ class RestApiService {
       responseMessageKey: responseMessageKey ?? _responseMessageKey,
       () => _client
           .fetch(requestOptions)
-          .timeout(timeoutSeconds != null ? Duration(seconds: timeoutSeconds) : _connectTimeout),
+          .timeout(
+            timeoutSeconds != null
+                ? Duration(seconds: timeoutSeconds)
+                : _connectTimeout,
+          ),
     );
   }
 
@@ -240,7 +290,11 @@ class RestApiService {
           cancelToken: cancelToken,
           onReceiveProgress: onReceiveProgress,
         )
-        .timeout(timeoutSeconds != null ? Duration(seconds: timeoutSeconds) : _connectTimeout);
+        .timeout(
+          timeoutSeconds != null
+              ? Duration(seconds: timeoutSeconds)
+              : _connectTimeout,
+        );
     // return _handleResponse(
     //   encryptedResponse: encryptedResponse,
     //   () => _client
@@ -285,7 +339,11 @@ class RestApiService {
             cancelToken: cancelToken,
             onReceiveProgress: onReceiveProgress,
           )
-          .timeout(timeoutSeconds != null ? Duration(seconds: timeoutSeconds) : _connectTimeout),
+          .timeout(
+            timeoutSeconds != null
+                ? Duration(seconds: timeoutSeconds)
+                : _connectTimeout,
+          ),
     );
   }
 
@@ -318,7 +376,11 @@ class RestApiService {
             onReceiveProgress: onReceiveProgress,
             onSendProgress: onSendProgress,
           )
-          .timeout(timeoutSeconds != null ? Duration(seconds: timeoutSeconds) : _connectTimeout),
+          .timeout(
+            timeoutSeconds != null
+                ? Duration(seconds: timeoutSeconds)
+                : _connectTimeout,
+          ),
     );
   }
 
@@ -352,7 +414,11 @@ class RestApiService {
             onReceiveProgress: onReceiveProgress,
             onSendProgress: onSendProgress,
           )
-          .timeout(timeoutSeconds != null ? Duration(seconds: timeoutSeconds) : _connectTimeout),
+          .timeout(
+            timeoutSeconds != null
+                ? Duration(seconds: timeoutSeconds)
+                : _connectTimeout,
+          ),
     );
   }
 
@@ -386,7 +452,11 @@ class RestApiService {
             onSendProgress: onSendProgress,
             queryParameters: queryParameters,
           )
-          .timeout(timeoutSeconds != null ? Duration(seconds: timeoutSeconds) : _connectTimeout),
+          .timeout(
+            timeoutSeconds != null
+                ? Duration(seconds: timeoutSeconds)
+                : _connectTimeout,
+          ),
     );
   }
 
@@ -414,7 +484,11 @@ class RestApiService {
             data: formData ?? data,
             queryParameters: queryParameters,
           )
-          .timeout(timeoutSeconds != null ? Duration(seconds: timeoutSeconds) : _connectTimeout),
+          .timeout(
+            timeoutSeconds != null
+                ? Duration(seconds: timeoutSeconds)
+                : _connectTimeout,
+          ),
     );
   }
 }

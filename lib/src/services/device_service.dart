@@ -5,8 +5,11 @@ import 'package:device_info_plus/device_info_plus.dart';
 import 'package:flutter/foundation.dart';
 
 class DeviceService {
-  DeviceService._internal({required DeviceInfoPlugin deviceInfoPlugin}) : _deviceInfoPlugin = deviceInfoPlugin;
-  static final DeviceService _instance = DeviceService._internal(deviceInfoPlugin: DeviceInfoPlugin());
+  DeviceService._internal({required DeviceInfoPlugin deviceInfoPlugin})
+    : _deviceInfoPlugin = deviceInfoPlugin;
+  static final DeviceService _instance = DeviceService._internal(
+    deviceInfoPlugin: DeviceInfoPlugin(),
+  );
   //
   static final DeviceService instance = DeviceService();
 
@@ -62,7 +65,8 @@ class DeviceService {
       _deviceModel = androidInfo.device;
     } else if (Platform.isIOS) {
       IosDeviceInfo iosInfo = await _deviceInfoPlugin.iosInfo;
-      _deviceModel = iosInfo.modelName;
+      // _deviceModel = iosInfo.modelName;
+      _deviceModel = iosInfo.systemName;
     } else if (Platform.isWindows) {
       WindowsDeviceInfo windowsInfo = await _deviceInfoPlugin.windowsInfo;
       _deviceModel = windowsInfo.computerName;
@@ -71,7 +75,8 @@ class DeviceService {
       _deviceModel = linuxInfo.variant;
     } else if (Platform.isMacOS) {
       MacOsDeviceInfo macInfo = await _deviceInfoPlugin.macOsInfo;
-      _deviceModel = macInfo.modelName;
+      // _deviceModel = macInfo.modelName;
+      _deviceModel = macInfo.computerName;
     } else {
       _deviceModel = null;
     }

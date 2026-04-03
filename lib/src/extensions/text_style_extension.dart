@@ -5,7 +5,7 @@ extension TextStyleMapExtension on TextStyle {
     return {
       'color': color?.toARGB32(),
       'fontSize': fontSize,
-      'fontWeight': fontWeight?.index,
+      'fontWeight': fontWeight?.value,
       'fontStyle': fontStyle?.index,
       'letterSpacing': letterSpacing,
       'wordSpacing': wordSpacing,
@@ -20,22 +20,22 @@ extension TextStyleMapExtension on TextStyle {
     return TextStyle(
       color: map['color'] != null ? Color(map['color']) : null,
       fontSize: map['fontSize']?.toDouble(),
-      fontWeight:
-          map['fontWeight'] != null
-              ? FontWeight.values[map['fontWeight']]
-              : null,
-      fontStyle:
-          map['fontStyle'] != null ? FontStyle.values[map['fontStyle']] : null,
+      fontWeight: map['fontWeight'] != null
+          ? FontWeight.values[map['fontWeight']]
+          : null,
+      fontStyle: map['fontStyle'] != null
+          ? FontStyle.values[map['fontStyle']]
+          : null,
       letterSpacing: map['letterSpacing']?.toDouble(),
       wordSpacing: map['wordSpacing']?.toDouble(),
       height: map['height']?.toDouble(),
 
-      decorationColor:
-          map['decorationColor'] != null ? Color(map['decorationColor']) : null,
-      decorationStyle:
-          map['decorationStyle'] != null
-              ? TextDecorationStyle.values[map['decorationStyle']]
-              : null,
+      decorationColor: map['decorationColor'] != null
+          ? Color(map['decorationColor'])
+          : null,
+      decorationStyle: map['decorationStyle'] != null
+          ? TextDecorationStyle.values[map['decorationStyle']]
+          : null,
       fontFamily: map['fontFamily'],
     );
   }
