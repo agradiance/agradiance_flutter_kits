@@ -6,13 +6,13 @@ class AppMainNavigationService {
 
   static final AppMainNavigationService _internal =
       AppMainNavigationService._();
-  static AppMainNavigationService instance = AppMainNavigationService();
+  static AppMainNavigationService get instance => _internal;
 
   AppMainNavigationService._();
 
-  factory AppMainNavigationService() {
-    return _internal;
-  }
+  // factory AppMainNavigationService._() {
+  //   return _internal;
+  // }
 
   BuildContext? get context => instance.navigatorKey.currentState?.context;
 
