@@ -43,16 +43,32 @@ extension TextStyleExtensions on Text {
   }
 
   // FontStyle
-  Text get italicFontStyle => copyWith(style: (style ?? TextStyle()).copyWith(fontStyle: FontStyle.italic));
-  Text get normalFontStyle => copyWith(style: (style ?? TextStyle()).copyWith(fontStyle: FontStyle.normal));
+  Text get italicFontStyle => copyWith(
+    style: (style ?? TextStyle()).copyWith(fontStyle: FontStyle.italic),
+  );
+  Text get normalFontStyle => copyWith(
+    style: (style ?? TextStyle()).copyWith(fontStyle: FontStyle.normal),
+  );
 
   // TextDecoration
   Text get bold => weight(FontWeight.bold);
   Text get normal => weight(FontWeight.normal);
-  Text get underline => copyWith(style: (style ?? TextStyle()).copyWith(decoration: TextDecoration.underline));
-  Text get lineThrough => copyWith(style: (style ?? TextStyle()).copyWith(decoration: TextDecoration.lineThrough));
-  Text get overline => copyWith(style: (style ?? TextStyle()).copyWith(decoration: TextDecoration.overline));
-  Text get none => copyWith(style: (style ?? TextStyle()).copyWith(decoration: TextDecoration.none));
+  Text get underline => copyWith(
+    style: (style ?? TextStyle()).copyWith(
+      decoration: TextDecoration.underline,
+    ),
+  );
+  Text get lineThrough => copyWith(
+    style: (style ?? TextStyle()).copyWith(
+      decoration: TextDecoration.lineThrough,
+    ),
+  );
+  Text get overline => copyWith(
+    style: (style ?? TextStyle()).copyWith(decoration: TextDecoration.overline),
+  );
+  Text get none => copyWith(
+    style: (style ?? TextStyle()).copyWith(decoration: TextDecoration.none),
+  );
 
   // Align
   Text get center => copyWith(textAlign: TextAlign.center);
@@ -62,23 +78,34 @@ extension TextStyleExtensions on Text {
   Text get right => copyWith(textAlign: TextAlign.right);
   Text get start => copyWith(textAlign: TextAlign.start);
 
-  Text font(String fontFamily) => copyWith(style: (style ?? TextStyle()).copyWith(fontFamily: fontFamily));
+  Text font(String fontFamily) =>
+      copyWith(style: (style ?? TextStyle()).copyWith(fontFamily: fontFamily));
 
-  Text color(Color color) => copyWith(style: (style ?? TextStyle()).copyWith(color: color));
+  Text color(Color color) =>
+      copyWith(style: (style ?? TextStyle()).copyWith(color: color));
 
   Text lines(int maxLines) => copyWith(maxLines: maxLines);
 
-  Text weight(FontWeight fontWeight) => copyWith(style: (style ?? TextStyle()).copyWith(fontWeight: fontWeight));
+  Text weight(FontWeight fontWeight) =>
+      copyWith(style: (style ?? TextStyle()).copyWith(fontWeight: fontWeight));
 
-  Text size(double fontSize) => copyWith(style: (style ?? TextStyle()).copyWith(fontSize: fontSize));
+  Text size(double fontSize) =>
+      copyWith(style: (style ?? TextStyle()).copyWith(fontSize: fontSize));
 
-  Text outlined({Color? outlinedColor, double strokeWidth = 2, PaintingStyle paintingStyle = PaintingStyle.stroke}) {
+  Text outlined({
+    Color? outlinedColor,
+    double strokeWidth = 2,
+    PaintingStyle paintingStyle = PaintingStyle.stroke,
+  }) {
     return copyWith(
       style: (style ?? TextStyle()).copyWith(
         foreground: Paint()
           ..style = paintingStyle
           ..strokeWidth = strokeWidth
-          ..color = (outlinedColor ?? style?.color?.luminance ?? Colors.black), // Outline color
+          ..color =
+              (outlinedColor ??
+              style?.color?.luminance ??
+              Colors.black), // Outline color
       ),
     );
   }
@@ -105,4 +132,24 @@ extension TextStyleExtensions on Text {
   Text get sp18 => size(18);
   Text get sp19 => size(19);
   Text get sp20 => size(20);
+  Text get sp21 => size(21);
+  Text get sp22 => size(22);
+  Text get sp23 => size(23);
+  Text get sp24 => size(24);
+  Text get sp25 => size(25);
+  Text get sp26 => size(26);
+  Text get sp27 => size(27);
+  Text get sp28 => size(28);
+  Text get sp29 => size(29);
+  Text get sp30 => size(30);
+  Text get sp31 => size(31);
+  Text get sp32 => size(32);
+  Text get sp33 => size(33);
+  Text get sp34 => size(34);
+  Text get sp35 => size(35);
+  Text get sp36 => size(36);
+  Text get sp37 => size(37);
+  Text get sp38 => size(38);
+  Text get sp39 => size(39);
+  Text get sp40 => size(40);
 }

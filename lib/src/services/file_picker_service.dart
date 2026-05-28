@@ -24,7 +24,7 @@ class FilePickerService {
     bool lockParentWindow = false,
     bool readSequential = false,
   }) async {
-    FilePickerResult? result = await FilePicker.platform.pickFiles(
+    FilePickerResult? result = await FilePicker.pickFiles(
       allowMultiple: allowMultiple,
       allowedExtensions: allowedExtensions,
       compressionQuality: compressionQuality,
